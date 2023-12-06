@@ -1,31 +1,13 @@
 import React from "react";
 
-const Home = () => {
+const Home = (props) => {
     return (
-        <>
+        <main>
             <h2>Últimos lançamentos</h2>
             <div className="card">
-                <div className="thumb">
-                    <img src="imagens/capas/9788575228142.jpg" alt="Padrões para kubernetes" />
-                </div>
-                <div className="detalhes">
-                    <h3>Padrões para kubernetes</h3>
-                    <p>O modo como os ...</p>
-                    <a href="#">Leia mais &gt;</a>
-                </div>
+                <p>Conteúdos da home page</p>
             </div>
-
-            <div className="card">
-                <div className="thumb">
-                    <img src="imagens/capas/9788575228074.jpg" alt="Introdução ao pentest" />
-                </div>
-                <div className="detalhes">
-                    <h3>Introdução ao Pentest - 2ª Edição</h3>
-                    <p>Introdução ao Pentest ...</p>
-                    <a href="#">Leia mais &gt;</a>
-                </div>
-            </div>
-        </>
+        </main>
     )
 }
 
