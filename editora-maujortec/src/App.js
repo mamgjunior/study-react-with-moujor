@@ -12,10 +12,11 @@ import Frontend from './components/Frontend';
 import Programacao from './components/Programacao';
 import Design from './components/Design';
 import Catalogo from './components/Catalogo';
+import Livro from './components/Livro';
 import NotFound from './components/NotFound';
 
 import axios from 'axios';
-import Livro from './components/Livro';
+
 
 
 class App extends Component {
@@ -43,12 +44,7 @@ class App extends Component {
           <Route path='/programacao' element={<Programacao livros={this.state.livros} />} />
           <Route path='/design' element={<Design livros={this.state.livros} />} />
           <Route path='/catalogo' element={<Catalogo livros={this.state.livros} />} />
-          <Route path='/livro/:livroSlug' element={(props) => {
-            console.log('aqui');
-            const livro = this.state.livros.find(livro => livro.slug === props.match.params.livroSlug);
-            if (livro) return <Livro livros={this.state.livros} />;
-            else return <NotFound />;
-          }} />
+          <Route path='/livro/:livroSlug' element={<Livro livros={this.state.livros} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
