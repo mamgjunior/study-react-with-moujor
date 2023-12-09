@@ -21,7 +21,7 @@ import Livro from './components/Livro';
 class App extends Component {
   state = {
     livros: [],
-  }
+  };
 
   async componentDidMount() {
     try {
@@ -29,7 +29,7 @@ class App extends Component {
       this.setState({ livros });
     } catch (error) {
       console.log(error);
-      document.querySelectorAll('.principal')[0].insertAdjacentHTML('beforeend', '<p class="erro">Mensagem de erro</p>')
+      document.querySelectorAll('.principal')[0].insertAdjacentHTML('beforeend', '<p class="erro">Mensagem de erro</p>');
     }
   }
 
@@ -44,9 +44,10 @@ class App extends Component {
           <Route path='/design' element={<Design livros={this.state.livros} />} />
           <Route path='/catalogo' element={<Catalogo livros={this.state.livros} />} />
           <Route path='/livro/:livroSlug' element={(props) => {
+            console.log('aqui');
             const livro = this.state.livros.find(livro => livro.slug === props.match.params.livroSlug);
-            if (livro) return <Livro livro={livro} />
-            else return <NotFound />
+            if (livro) return <Livro livros={this.state.livros} />;
+            else return <NotFound />;
           }} />
           <Route path='*' element={<NotFound />} />
         </Routes>
