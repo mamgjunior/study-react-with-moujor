@@ -41,7 +41,7 @@ const Livro = ({ livros }) => {
         </div>
       </div>
     </main>
-  )
+  );
 };
 
 export default Livro;
