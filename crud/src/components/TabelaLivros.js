@@ -5,11 +5,11 @@ const TabelaLivros = ({ livros }) => {
     <div className="livros">
       <h1>Tabela de livros</h1>
       {
-        !livros.length && <h2>Nenhum livro cadastrado!</h2>
+        livros.length === 0 && <h2>Nenhum livro cadastrado!</h2>
       }
 
       {
-        livros.length && (
+        livros.length > 0 && (
           <table className="tabela">
             <thead>
               <tr>

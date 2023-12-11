@@ -1,8 +1,16 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+
 import logo from './logo.svg';
 
 import Menu from './components/Menu';
 import TabelaLivros from './components/TabelaLivros';
+import CadastrarLivros from './components/CadastrarLivros';
+import NotFound from './components/NotFound';
 
 
 class App extends Component {
@@ -31,12 +39,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <Router>
         <Menu />
-        <TabelaLivros
-          livros={this.state.livros}
-        />
-      </div>
+        <Routes>
+          <Route path='/' element={<TabelaLivros livros={this.state.livros} />} />
+          <Route path='/cadastrar' element={<CadastrarLivros />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Router>
     );
   }
 }
