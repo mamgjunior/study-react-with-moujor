@@ -5,8 +5,6 @@ import {
   Route
 } from "react-router-dom";
 
-import logo from './logo.svg';
-
 import Menu from './components/Menu';
 import TabelaLivros from './components/TabelaLivros';
 import CadastrarLivros from './components/CadastrarLivros';

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 const CadastrarLivros = ({
@@ -33,7 +33,7 @@ const CadastrarLivros = ({
     if (isbnLivro !== '' && isbnLivro !== undefined) {
       setLivro(livros.find(element => element.isbn === isbnLivro));
     }
-  }, [isbnLivro])
+  }, [isbnLivro, livros])
 
   if (redirecionar === true) {
     return (
