@@ -1,8 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
-const CadastrarLivros = ({ inserirLivro }) => {
-
+const CadastrarLivros = ({
+  livros,
+  inserirLivro,
+  editarLivro
+}) => {
+  const { isbnLivro } = useParams();
   const [redirecionar, setRedirecionar] = useState(false);
   const [livro, setLivro] = useState(
     {
@@ -15,9 +19,21 @@ const CadastrarLivros = ({ inserirLivro }) => {
 
   const handleLivroForm = (e) => {
     e.preventDefault();
-    inserirLivro(livro);
+
+    if (isbnLivro !== '' && isbnLivro !== undefined) {
+      editarLivro(livro);
+    } else {
+      inserirLivro(livro);
+    }
+
     setRedirecionar(true);
   }
+
+  useEffect(() => {
+    if (isbnLivro !== '' && isbnLivro !== undefined) {
+      setLivro(livros.find(element => element.isbn === isbnLivro));
+    }
+  }, [isbnLivro])
 
   if (redirecionar === true) {
     return (

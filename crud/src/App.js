@@ -45,10 +45,23 @@ class App extends Component {
   }
 
   editarLivro = livro => {
-    livro.id = this.state.livros.length + 1;
     this.setState({
-      livros: [...this.state.livros, livro]
+      livros: this.state.livros.map(element => {
+        if (element.isbn === livro.isbn) {
+          return { ...livro }
+        } else {
+          return { ...element }
+        }
+      })
     });
+  }
+
+  removerLivro = livro => {
+    if (window.confirm('Deseja remover este livro?')) {
+      this.setState({
+        livros: this.state.livros.filter(element => element.isbn !== livro.isbn)
+      });
+    }
   }
 
 
@@ -57,19 +70,35 @@ class App extends Component {
       <Router>
         <Menu />
         <Routes>
-          <Route path='/' element={<TabelaLivros livros={this.state.livros} />} />
+          <Route
+            path='/'
+            element={
+              <TabelaLivros
+                livros={this.state.livros}
+                removerLivro={this.removerLivro}
+              />
+            }
+          />
           <Route
             path='/cadastrar'
             element={
               <CadastrarLivros
+                livros={this.state.livros}
                 inserirLivro={this.inserirLivro}
+                editarLivro={this.editarLivro}
               />
             }
           />
-          {/* <Route
+          <Route
             path="/editar/:isbnLivro"
-            element={<CadastrarLivros editarLivro={this.editarLivro} />}
-          /> */}
+            element={
+              <CadastrarLivros
+                livros={this.state.livros}
+                inserirLivro={this.inserirLivro}
+                editarLivro={this.editarLivro}
+              />
+            }
+          />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>
