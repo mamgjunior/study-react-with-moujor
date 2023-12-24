@@ -13,26 +13,7 @@ import NotFound from './components/NotFound';
 
 class App extends Component {
   state = {
-    livros: [
-      {
-        id: 1,
-        isbn: "978-85-7522-403-8",
-        titulo: "HTML5 - 2ª Edição",
-        autor: "Maurício Samy Silva"
-      },
-      {
-        id: 2,
-        isbn: "978-85-7522-807-4",
-        titulo: "Introdução ao Pentest",
-        autor: "Daniel Moreno"
-      },
-      {
-        id: 3,
-        isbn: "978-85-7522-780-8",
-        titulo: "Internet das Coisas para Desenvolvedores",
-        autor: "Ricardo da Silva Ogliari"
-      }
-    ]
+    livros: JSON.parse(localStorage.getItem('books') || '[]')
   };
 
   inserirLivro = livro => {
@@ -40,6 +21,9 @@ class App extends Component {
     this.setState({
       livros: [...this.state.livros, livro]
     });
+
+    localStorage.clear();
+    localStorage.setItem('books', JSON.stringify([...this.state.livros, livro]));
   }
 
   editarLivro = livro => {
@@ -52,6 +36,15 @@ class App extends Component {
         }
       })
     });
+
+    localStorage.clear();
+    localStorage.setItem('books', JSON.stringify(this.state.livros.map(element => {
+      if (element.isbn === livro.isbn) {
+        return { ...livro }
+      } else {
+        return { ...element }
+      }
+    })));
   }
 
   removerLivro = livro => {
@@ -59,6 +52,9 @@ class App extends Component {
       this.setState({
         livros: this.state.livros.filter(element => element.isbn !== livro.isbn)
       });
+
+      localStorage.clear();
+      localStorage.setItem('books', JSON.stringify(this.state.livros.filter(element => element.isbn !== livro.isbn)));
     }
   }
 
