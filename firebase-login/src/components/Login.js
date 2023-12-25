@@ -9,7 +9,7 @@ export default class Login extends Component {
 
   handleLogin = (event) => {
     event.preventDefault();
-    console.log(this.state.email, this.state.password)
+    this.props.onLogin(this.state.email, this.state.password)
   }
 
   render() {

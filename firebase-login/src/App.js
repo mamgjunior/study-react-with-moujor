@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 
 import Header from './components/Header';
@@ -12,6 +13,8 @@ import NotFound from './components/NotFound';
 import Login from "./components/Login";
 import TabelaHome from "./components/TabelaHome";
 
+import firebase from './firebase';
+require('firebase/auth');
 
 class App extends Component {
   state = {
@@ -61,22 +64,40 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      isAuthenticated: false,
-    });
+  onLogin = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.setState({ isAuthenticated: true });
+      })
+      .catch((error) => console.error(error));
+  }
+
+  onLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then((user) => {
+        this.setState({ isAuthenticated: false });
+      })
+      .catch((error) => console.error(error));
   }
 
 
   render() {
     return (
       <Router>
-        <Header />
+        <Header
+          isAuthenticated={this.state.isAuthenticated}
+          onLogout={this.onLogout}
+        />
+
         <Routes>
           <Route
             path='/'
             element={
-              this.state.isAuthenticated === false ? (
+              !this.state.isAuthenticated ? (
                 <TabelaHome
                   livros={this.state.livros}
                 />
@@ -98,7 +119,16 @@ class App extends Component {
               />
             }
           />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              !this.state.isAuthenticated ? (
+                <Login onLogin={this.onLogin} />
+              ) : (
+                <Navigate to='/' />
+              )
+            }
+          />
           <Route
             path="/editar/:isbnLivro"
             element={
