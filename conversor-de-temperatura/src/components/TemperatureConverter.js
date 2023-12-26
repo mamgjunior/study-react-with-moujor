@@ -3,6 +3,10 @@ import React, { useState } from "react";
 const TemperatureConverter = () => {
   let [temperature, setTemperature] = useState('');
 
+  const userSelect = document.querySelector('#user-choice');
+  const teclas = document.querySelectorAll('.tecla');
+  const resultados = document.querySelectorAll('.result');
+
   const handleTemperature = (valorTecla) => {
     if (valorTecla === '.' && temperature.includes('.')) {
       return false;
@@ -30,6 +34,10 @@ const TemperatureConverter = () => {
   }
 
   const handleConverter = () => {
+    if (temperature === '-0') {
+      setTemperature('0');
+    }
+
     const fromTemp = document.querySelector('#user-choice').options[document.querySelector('#user-choice').selectedIndex].value;
 
     const resultCelsius = document.querySelector('#celsius-temp');
@@ -73,6 +81,26 @@ const TemperatureConverter = () => {
       fahrenheitTemperature = ((temp - 273.15) * 9 / 5 + 32).toFixed(2);
       resultFahrenheit.insertAdjacentHTML('afterbegin', fahrenheitTemperature);
     }
+
+    userSelect.setAttribute('disabled', true);
+    [].map.call(teclas, (el) => {
+      return el.setAttribute('disabled', true);
+    });
+  }
+
+  const handleReset = () => {
+    [].map.call(teclas, (el) => {
+      return el.removeAttribute('disabled');
+    });
+
+    [].map.call(resultados, (el) => {
+      if (el.hasChildNodes()) {
+        return el.removeChild(el.firstChild);
+      }
+    });
+
+    userSelect.removeAttribute('disabled');
+    setTemperature('');
   }
 
   return (
@@ -109,7 +137,7 @@ const TemperatureConverter = () => {
         <span>
           <sup>o</sup>K
         </span>
-        
+
         <button
           className="tecla"
           id="converter"
@@ -135,7 +163,7 @@ const TemperatureConverter = () => {
         <button className="virgula tecla" onClick={() => handleTemperature('.')} >,</button>
         <button className="limpa tecla" onClick={() => handleBackSpace()} ></button>
         <button className="negativo tecla" onClick={() => handleTemperature('-')} >-</button>
-        <div className="reset tecla">Nova conversão</div>
+        <div className="reset tecla" onClick={() => handleReset()} >Nova conversão</div>
       </aside>
     </>
   );
