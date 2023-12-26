@@ -14,7 +14,6 @@ import Login from "./components/Login";
 import TabelaHome from "./components/TabelaHome";
 
 import firebase from './firebase';
-require('firebase/auth');
 
 class App extends Component {
   state = {
